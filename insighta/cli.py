@@ -16,7 +16,10 @@ from rich.status import Status
 
 from insighta import client, display
 from insighta.commands.profiles import profiles
-from insighta.config import API_URL, CREDENTIALS_PATH, GITHUB_CLIENT_ID, clear_credentials, load_credentials, save_credentials
+from insighta.config import (
+    API_URL, CREDENTIALS_PATH, GITHUB_CLIENT_ID,
+    clear_credentials, load_credentials, save_credentials,
+)
 
 console = Console()
 
