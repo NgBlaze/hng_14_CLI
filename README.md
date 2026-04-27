@@ -6,6 +6,14 @@ Command-line interface for the Insighta Labs+ profile intelligence platform. Aut
 
 ## Installation
 
+**Option 1 — Install directly from GitHub (recommended for testing):**
+
+```bash
+pip install git+https://github.com/NgBlaze/hng_14_CLI.git
+```
+
+**Option 2 — Clone and install in editable mode (for development):**
+
 ```bash
 git clone https://github.com/NgBlaze/hng_14_CLI.git
 cd hng_14_CLI
