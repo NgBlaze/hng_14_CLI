@@ -1,0 +1,39 @@
+.github/workflows/ci.yml
+  d2b3512aa6e99508 1-27
+insighta/config.py
+  d2b3512aa6e99508 1-33
+tests/test_cli.py
+  d2b3512aa6e99508 1-83
+pyproject.toml
+  d2b3512aa6e99508 1-29
+insighta/commands/profiles.py
+  d2b3512aa6e99508 1-170
+insighta/client.py
+  d2b3512aa6e99508 1-79
+.gitignore
+  d2b3512aa6e99508 1-9
+insighta/display.py
+  d2b3512aa6e99508 1-72
+insighta/cli.py
+  d2b3512aa6e99508 1-214
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "14302b7cd61698f8d7ca85ce0f5be798a2c9056e",
+  "prompts": {
+    "d2b3512aa6e99508": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "41b53a1a-d83e-4ccc-8e1f-d9673e45aa41",
+        "model": "<synthetic>"
+      },
+      "human_author": "Precious Okolaa",
+      "messages": [],
+      "total_additions": 718,
+      "total_deletions": 2,
+      "accepted_lines": 716,
+      "overriden_lines": 0
+    }
+  }
+}
