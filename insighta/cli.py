@@ -14,13 +14,11 @@ import httpx
 from rich.console import Console
 from rich.status import Status
 
+from insighta import client, display
 from insighta.commands.profiles import profiles
-from insighta.config import API_URL, CREDENTIALS_PATH, clear_credentials, load_credentials, save_credentials
-from insighta import display
+from insighta.config import API_URL, CREDENTIALS_PATH, GITHUB_CLIENT_ID, clear_credentials, load_credentials, save_credentials
 
 console = Console()
-
-GITHUB_CLIENT_ID = "Ov23lisXgHk5qzl5iRmV"
 
 
 # ─── PKCE helpers ─────────────────────────────────────────────────────────────
@@ -187,26 +185,12 @@ def whoami():
         display.error("Not logged in. Run 'insighta login' first.")
         sys.exit(1)
 
-    from insighta import client
     resp = client.request("GET", "/auth/whoami")
     if resp.status_code != 200:
         display.error(resp.json().get("message", "Failed to fetch user info."))
         sys.exit(1)
 
-    user = resp.json()["data"]
-    table_rows = [
-        ("Username", f"@{user['username']}"),
-        ("Email", user.get("email") or "—"),
-        ("Role", user["role"]),
-        ("ID", user["id"]),
-    ]
-    from rich.table import Table
-    t = Table(show_header=False, border_style="dim", padding=(0, 1))
-    t.add_column("", style="bold cyan", min_width=10)
-    t.add_column("")
-    for k, v in table_rows:
-        t.add_row(k, v)
-    console.print(t)
+    display.whoami_table(resp.json()["data"])
 
 
 # ─── Register subgroups ───────────────────────────────────────────────────────

@@ -64,6 +64,17 @@ def pagination_info(page: int, limit: int, total: int, total_pages: int) -> None
     )
 
 
+def whoami_table(user: dict) -> None:
+    table = Table(show_header=False, border_style="dim", padding=(0, 1))
+    table.add_column("", style="bold cyan", min_width=10)
+    table.add_column("")
+    table.add_row("Username", f"@{user['username']}")
+    table.add_row("Email", user.get("email") or "—")
+    table.add_row("Role", user["role"])
+    table.add_row("ID", user["id"])
+    console.print(table)
+
+
 def error(msg: str) -> None:
     console.print(f"[bold red]Error:[/bold red] {msg}")
 
