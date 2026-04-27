@@ -30,23 +30,20 @@ insighta --help
 
 ## System Architecture
 
-```
-┌─────────────────────────────────────────────────┐
-│              insighta CLI                        │
-│                                                  │
-│  cli.py          ← entry point, auth commands   │
-│  commands/       ← profile subcommands           │
-│  client.py       ← authenticated HTTP client     │
-│  config.py       ← credentials + API URL        │
-│  display.py      ← Rich table renderers         │
-└─────────────────┬───────────────────────────────┘
-                  │ HTTPS + Bearer JWT
-                  │ X-API-Version: 1
-                  ▼
-┌─────────────────────────────────────────────────┐
-│        Insighta Labs+ Backend API                │
-│     https://hng-14-stage-1.vercel.app           │
-└─────────────────────────────────────────────────┘
+```mermaid
+graph LR
+    subgraph CLI["insighta CLI"]
+        A[cli.py\nauth commands]
+        B[commands/profiles.py\nprofile subcommands]
+        C[client.py\nHTTP + auto-refresh]
+        D[config.py\ncredentials + API URL]
+        E[display.py\nRich tables]
+    end
+
+    CLI -->|"HTTPS · Bearer JWT\nX-API-Version: 1"| API["Backend API\nhng-14-stage-1.vercel.app"]
+    C --> D
+    A & B --> C
+    C --> E
 ```
 
 **Credential storage:** `~/.insighta/credentials.json` (permissions: `600`)
@@ -56,6 +53,29 @@ insighta --help
 ## Authentication Flow
 
 The CLI uses GitHub OAuth with **PKCE** (Proof Key for Code Exchange) — no client secret is ever exposed on the user's machine.
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant CLI as insighta CLI
+    participant LS as Local HTTP Server
+    participant B as Backend API
+    participant GH as GitHub
+
+    U->>CLI: insighta login
+    CLI->>CLI: generate code_verifier + code_challenge
+    CLI->>LS: start server on random port
+    CLI->>U: open browser → GitHub OAuth URL
+    U->>GH: authenticate
+    GH->>LS: GET /callback?code=&state=
+    LS-->>CLI: capture code + validate state
+    CLI->>B: POST /auth/github/exchange\n{code, code_verifier, code_challenge, redirect_uri}
+    B->>B: verify PKCE challenge
+    B->>GH: exchange code → access_token
+    B-->>CLI: {access_token, refresh_token, user}
+    CLI->>CLI: save to ~/.insighta/credentials.json (chmod 600)
+    CLI->>U: Logged in as @username
+```
 
 ```
 insighta login
