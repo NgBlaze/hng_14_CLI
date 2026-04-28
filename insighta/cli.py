@@ -92,12 +92,12 @@ def login():
     result: queue.Queue = queue.Queue()
     _run_callback_server(port, result)
 
+    # GitHub App: scope is derived from App permissions, not URL param.
     github_url = (
         f"https://github.com/login/oauth/authorize"
         f"?client_id={GITHUB_CLIENT_ID}"
         f"&redirect_uri={redirect_uri}"
         f"&state={state}"
-        f"&scope=read:user,user:email"
     )
 
     console.print("\nOpening GitHub in your browser...")
