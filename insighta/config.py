@@ -4,7 +4,7 @@ from pathlib import Path
 
 CREDENTIALS_PATH = Path.home() / ".insighta" / "credentials.json"
 API_URL = os.environ.get("INSIGHTA_API_URL", "https://hng-14-stage-1.vercel.app")
-GITHUB_CLIENT_ID = os.environ.get("INSIGHTA_GITHUB_CLIENT_ID", "Ov23lisXgHk5qzl5iRmV")
+GITHUB_CLIENT_ID = os.environ.get("INSIGHTA_GITHUB_CLIENT_ID", "Iv23li63ND82ZMFCbcb8")
 
 
 def save_credentials(access_token: str, refresh_token: str, user: dict) -> None:
